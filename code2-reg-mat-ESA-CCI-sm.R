@@ -21,15 +21,15 @@ cl <- makeCluster(detectCores(), type='PSOCK')
 registerDoParallel(cl)
 control2 <- rfeControl(functions=rfFuncs, method="repeatedcv", number=5, repeats=5)
 (RFE_RF_model <- rfe(smX[-119], smX[,119], sizes=c(1:6), rfeControl=control2) )
-
 plot(RFE_RF_model, type=c("g", "o"))
-predictors(RFE_RF_model)
+predictors(RFE_RF_model)[1:5]
+(RFE_RF_model2 <- rfe(smX[predictors(RFE_RF_model)[1:5]], smX[,119], sizes=c(1:6), rfeControl=control2) )
 stopCluster(cl = cl)
 
 ##SOIL MOISTURE PREDICTION
 
 beginCluster(5)
 library(randomForest)
-(predRFE <- clusterR(wg, predict, args=list(model=RFE_RF_model)))
+(predRFE <- clusterR(wg[[predictors(RFE_RF_model)[1:5]]], predict, args=list(model=RFE_RF_model2)))
 plot(predRFE, col=colorRampPalette(c("gray", "brown", "blue"))(255))
 endCluster()
