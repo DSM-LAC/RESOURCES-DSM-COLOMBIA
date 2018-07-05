@@ -19,7 +19,7 @@ kriging_result = autoKrige(log(OCSKGM30)~1, d)
 #KrPred <- mask(stack(kriging_result$krige_output), cou)
 plot(kriging_result)
 
-     # Ordinary kriging, no new_data object
+     #ordinary Kriging, no new_data object
      kriging_result2 = autoKrige(log(OCSKGM30)~1, d, cou)
      plot(kriging_result2)
 
