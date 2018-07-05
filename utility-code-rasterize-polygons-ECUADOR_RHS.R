@@ -5,6 +5,7 @@ library(rgdal)
 s <- stack('ECUtopo.tif')
 #read polygon to rasterize
 rh <- readOGR(dsn=getwd(), layer="R_HUMEDAD_SUELOS_RHS_ECU")
+#saveRDS(rh, file='rhs.rds')
 #rasterize
 ras <- rasterize(rh, s, "RHS")
 ras <- as.factor(ras)
